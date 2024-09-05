@@ -17,7 +17,9 @@ pub mod seed_contract {
     use crate::constants::{SECONDS_IN_YEAR, WALLETS_COUNT};
     use super::*;
 
-
+    // Admin function for loading tokens to smart contract
+    // Must be call as first action on contract
+    // Without it all other function can't work
     pub fn initialize(ctx: Context<InitMain>, amount: u64) -> Result<()> {
         validate_init(
             &ctx.accounts.admin.key(),
@@ -54,6 +56,7 @@ pub mod seed_contract {
         Ok(())
     }
 
+    // User function for minting and withdrawing tokens at the same time
     pub fn mint(ctx: Context<Mint>) -> Result<()> {
         validate_mint(&ctx.accounts.mint_of_token.key(), &ctx.accounts.user.key())?;
 
